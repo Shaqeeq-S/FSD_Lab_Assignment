@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Management System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        /* Header */
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #dce3e8;
+        }
+
+        /* Cards */
+
+        .card {
+            background: white;
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        /* Form */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 17px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .add-btn:hover {
+            background: #2980b9;
+        }
+
+        .clear-btn {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .edit-btn {
+            background: #f39c12;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Search */
+
+        .search {
+            margin-bottom: 20px;
+        }
+
+        /* Table */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #34495e;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Message */
+
+        .message {
+            display: none;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+
+        <div class="header">
+
+            <h1>Contact Management System</h1>
+
+            <p>
+                Add, view, update and delete contacts
+            </p>
+
+        </div>
+
+
+        <!-- Add Contact -->
+
+        <div class="card">
+
+            <h2 id="formTitle">
+                Add New Contact
+            </h2>
+
+            <div id="message" class="message"></div>
+
+            <form id="contactForm">
+
+                <div class="form-grid">
+
+                    <div>
+                        <label>Contact ID</label>
+
+                        <input
+                            type="text"
+                            id="contactId"
+                            placeholder="C001"
+                            required
+                        >
+                    </div>
+
+
+                    <div>
+                        <label>Name</label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter name"
+                            required
+                        >
+                    </div>
+
+
+                    <div>
+                        <label>Phone</label>
+
+                        <input
+                            type="text"
+                            id="phone"
+                            placeholder="10 digit phone number"
+                            maxlength="10"
+                            required
+                        >
+                    </div>
+
+
+                    <div>
+                        <label>Email</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="example@gmail.com"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="add-btn"
+                        id="submitButton"
+                    >
+                        Add Contact
+                    </button>
+
+                    <button
+                        type="button"
+                        class="clear-btn"
+                        onclick="clearForm()"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- Contact List -->
+
+        <div class="card">
+
+            <h2>
+                Contact List
+            </h2>
+
+
+            <input
+                type="text"
+                id="search"
+                class="search"
+                placeholder="Search contacts..."
+                oninput="searchContacts()"
+            >
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Contact ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="contactTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div
+                id="emptyMessage"
+                class="empty"
+            >
+                No contacts found.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let contacts = [];
+
+        let editingId = null;
+
+
+        // =====================================
+        // LOAD CONTACTS
+        // =====================================
+
+        async function loadContacts() {
+
+            try {
+
+                const response =
+                    await fetch("/contacts");
+
+                const data =
+                    await response.json();
+
+                contacts =
+                    data.contacts || [];
+
+                displayContacts(contacts);
+
+            } catch (error) {
+
+                showMessage(
+                    "Unable to load contacts.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================
+        // DISPLAY CONTACTS
+        // =====================================
+
+        function displayContacts(list) {
+
+            const table =
+                document.getElementById("contactTable");
+
+            const empty =
+                document.getElementById("emptyMessage");
+
+
+            table.innerHTML = "";
+
+
+            if (list.length === 0) {
+
+                empty.style.display = "block";
+
+                return;
+
+            }
+
+
+            empty.style.display = "none";
+
+
+            list.forEach(contact => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>${contact.contactId}</td>
+
+                    <td>${contact.name}</td>
+
+                    <td>${contact.phone}</td>
+
+                    <td>${contact.email}</td>
+
+                    <td>
+
+                        <button
+                            class="edit-btn"
+                            onclick="editContact('${contact.contactId}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteContact('${contact.contactId}')"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                table.appendChild(row);
+
+            });
+
+        }
+
+
+        // =====================================
+        // ADD / UPDATE CONTACT
+        // =====================================
+
+        document
+            .getElementById("contactForm")
+            .addEventListener(
+                "submit",
+                async function(event) {
+
+                    event.preventDefault();
+
+
+                    const contactId =
+                        document
+                            .getElementById("contactId")
+                            .value
+                            .trim();
+
+
+                    const name =
+                        document
+                            .getElementById("name")
+                            .value
+                            .trim();
+
+
+                    const phone =
+                        document
+                            .getElementById("phone")
+                            .value
+                            .trim();
+
+
+                    const email =
+                        document
+                            .getElementById("email")
+                            .value
+                            .trim();
+
+
+                    // Phone validation
+
+                    if (!/^[0-9]{10}$/.test(phone)) {
+
+                        showMessage(
+                            "Phone number must contain exactly 10 digits.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    try {
+
+                        let response;
+
+
+                        // UPDATE
+
+                        if (editingId) {
+
+                            response =
+                                await fetch(
+                                    `/contacts/${editingId}`,
+                                    {
+                                        method: "PUT",
+
+                                        headers: {
+                                            "Content-Type":
+                                                "application/json"
+                                        },
+
+                                        body:
+                                            JSON.stringify({
+                                                name,
+                                                phone,
+                                                email
+                                            })
+                                    }
+                                );
+
+                        }
+
+
+                        // CREATE
+
+                        else {
+
+                            response =
+                                await fetch(
+                                    "/contacts",
+                                    {
+                                        method: "POST",
+
+                                        headers: {
+                                            "Content-Type":
+                                                "application/json"
+                                        },
+
+                                        body:
+                                            JSON.stringify({
+                                                contactId,
+                                                name,
+                                                phone,
+                                                email
+                                            })
+                                    }
+                                );
+
+                        }
+
+
+                        const data =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data.error ||
+                                data.message
+                            );
+
+                        }
+
+
+                        showMessage(
+                            editingId
+                                ? "Contact updated successfully."
+                                : "Contact added successfully.",
+                            "success"
+                        );
+
+
+                        clearForm();
+
+                        await loadContacts();
+
+                    } catch (error) {
+
+                        showMessage(
+                            error.message,
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================
+        // EDIT
+        // =====================================
+
+        function editContact(contactId) {
+
+            const contact =
+                contacts.find(
+                    c =>
+                        c.contactId === contactId
+                );
+
+
+            if (!contact) {
+                return;
+            }
+
+
+            document
+                .getElementById("contactId")
+                .value =
+                    contact.contactId;
+
+
+            document
+                .getElementById("name")
+                .value =
+                    contact.name;
+
+
+            document
+                .getElementById("phone")
+                .value =
+                    contact.phone;
+
+
+            document
+                .getElementById("email")
+                .value =
+                    contact.email;
+
+
+            editingId =
+                contactId;
+
+
+            document
+                .getElementById("formTitle")
+                .textContent =
+                    "Update Contact";
+
+
+            document
+                .getElementById("submitButton")
+                .textContent =
+                    "Update Contact";
+
+
+            document
+                .getElementById("contactId")
+                .disabled =
+                    true;
+
+        }
+
+
+        // =====================================
+        // DELETE
+        // =====================================
+
+        async function deleteContact(contactId) {
+
+            const confirmDelete =
+                confirm(
+                    "Are you sure you want to delete this contact?"
+                );
+
+
+            if (!confirmDelete) {
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/contacts/${contactId}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        data.error
+                    );
+
+                }
+
+
+                showMessage(
+                    "Contact deleted successfully.",
+                    "success"
+                );
+
+
+                loadContacts();
+
+
+            } catch (error) {
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================
+        // SEARCH
+        // =====================================
+
+        function searchContacts() {
+
+            const search =
+                document
+                    .getElementById("search")
+                    .value
+                    .toLowerCase();
+
+
+            const filtered =
+                contacts.filter(contact =>
+
+                    contact.contactId
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    contact.name
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    contact.phone
+                        .includes(search)
+
+                    ||
+
+                    contact.email
+                        .toLowerCase()
+                        .includes(search)
+
+                );
+
+
+            displayContacts(filtered);
+
+        }
+
+
+        // =====================================
+        // CLEAR FORM
+        // =====================================
+
+        function clearForm() {
+
+            document
+                .getElementById("contactForm")
+                .reset();
+
+
+            document
+                .getElementById("contactId")
+                .disabled =
+                    false;
+
+
+            editingId = null;
+
+
+            document
+                .getElementById("formTitle")
+                .textContent =
+                    "Add New Contact";
+
+
+            document
+                .getElementById("submitButton")
+                .textContent =
+                    "Add Contact";
+
+        }
+
+
+        // =====================================
+        // MESSAGE
+        // =====================================
+
+        function showMessage(message, type) {
+
+            const box =
+                document.getElementById("message");
+
+
+            box.textContent =
+                message;
+
+
+            box.className =
+                "message " + type;
+
+
+            setTimeout(() => {
+
+                box.className =
+                    "message";
+
+                box.style.display =
+                    "none";
+
+            }, 4000);
+
+        }
+
+
+        // =====================================
+        // START
+        // =====================================
+
+        loadContacts();
+
+    </script>
+
+</body>
+
+</html>
