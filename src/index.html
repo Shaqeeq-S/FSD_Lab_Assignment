@@ -4,362 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Contact Management System</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            color: #333;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 40px auto;
-        }
-
-        /* Header */
-
-        .header {
-            background: #2c3e50;
-            color: white;
-            padding: 25px;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .header h1 {
-            margin: 0 0 8px;
-        }
-
-        .header p {
-            margin: 0;
-            color: #dce3e8;
-        }
-
-        /* Cards */
-
-        .card {
-            background: white;
-            margin-top: 20px;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .card h2 {
-            margin-top: 0;
-            color: #2c3e50;
-        }
-
-        /* Form */
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        input {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-
-        .buttons {
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 10px 17px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-right: 8px;
-            font-size: 14px;
-        }
-
-        .add-btn {
-            background: #3498db;
-            color: white;
-        }
-
-        .add-btn:hover {
-            background: #2980b9;
-        }
-
-        .clear-btn {
-            background: #95a5a6;
-            color: white;
-        }
-
-        .edit-btn {
-            background: #f39c12;
-            color: white;
-        }
-
-        .delete-btn {
-            background: #e74c3c;
-            color: white;
-        }
-
-        /* Search */
-
-        .search {
-            margin-bottom: 20px;
-        }
-
-        /* Table */
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #34495e;
-            color: white;
-        }
-
-        tr:hover {
-            background: #f8f9fa;
-        }
-
-        /* Message */
-
-        .message {
-            display: none;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-        }
-
-        .success {
-            display: block;
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .error {
-            display: block;
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 20px;
-            color: #777;
-        }
-
-        /* Responsive */
-
-        @media (max-width: 700px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                width: 95%;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <h1>Contact Management System</h1>
 
-        <!-- Header -->
+    <p>Add, view, update and delete contacts</p>
 
-        <div class="header">
+    <hr>
 
-            <h1>Contact Management System</h1>
+    <!-- Add / Update Contact -->
 
-            <p>
-                Add, view, update and delete contacts
-            </p>
+    <h2 id="formTitle">Add New Contact</h2>
 
-        </div>
+    <div id="message"></div>
 
+    <form id="contactForm">
 
-        <!-- Add Contact -->
-
-        <div class="card">
-
-            <h2 id="formTitle">
-                Add New Contact
-            </h2>
-
-            <div id="message" class="message"></div>
-
-            <form id="contactForm">
-
-                <div class="form-grid">
-
-                    <div>
-                        <label>Contact ID</label>
-
-                        <input
-                            type="text"
-                            id="contactId"
-                            placeholder="C001"
-                            required
-                        >
-                    </div>
-
-
-                    <div>
-                        <label>Name</label>
-
-                        <input
-                            type="text"
-                            id="name"
-                            placeholder="Enter name"
-                            required
-                        >
-                    </div>
-
-
-                    <div>
-                        <label>Phone</label>
-
-                        <input
-                            type="text"
-                            id="phone"
-                            placeholder="10 digit phone number"
-                            maxlength="10"
-                            required
-                        >
-                    </div>
-
-
-                    <div>
-                        <label>Email</label>
-
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="example@gmail.com"
-                            required
-                        >
-                    </div>
-
-                </div>
-
-
-                <div class="buttons">
-
-                    <button
-                        type="submit"
-                        class="add-btn"
-                        id="submitButton"
-                    >
-                        Add Contact
-                    </button>
-
-                    <button
-                        type="button"
-                        class="clear-btn"
-                        onclick="clearForm()"
-                    >
-                        Clear
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-
-        <!-- Contact List -->
-
-        <div class="card">
-
-            <h2>
-                Contact List
-            </h2>
-
-
+        <p>
+            <label>Contact ID:</label>
             <input
                 type="text"
-                id="search"
-                class="search"
-                placeholder="Search contacts..."
-                oninput="searchContacts()"
+                id="contactId"
+                placeholder="C001"
+                required
             >
+        </p>
 
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Contact ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="contactTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-            <div
-                id="emptyMessage"
-                class="empty"
+        <p>
+            <label>Name:</label>
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter name"
+                required
             >
-                No contacts found.
-            </div>
+        </p>
 
-        </div>
+        <p>
+            <label>Phone:</label>
+            <input
+                type="text"
+                id="phone"
+                placeholder="10 digit phone number"
+                maxlength="10"
+                required
+            >
+        </p>
 
-    </div>
+        <p>
+            <label>Email:</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="example@gmail.com"
+                required
+            >
+        </p>
 
+        <button
+            type="submit"
+            id="submitButton"
+        >
+            Add Contact
+        </button>
+
+        <button
+            type="button"
+            onclick="clearForm()"
+        >
+            Clear
+        </button>
+
+    </form>
+
+    <hr>
+
+    <!-- Contact List -->
+
+    <h2>Contact List</h2>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search contacts..."
+        oninput="searchContacts()"
+    >
+
+    <br><br>
+
+    <table border="1" cellpadding="8">
+
+        <thead>
+
+            <tr>
+                <th>Contact ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="contactTable"></tbody>
+
+    </table>
+
+    <p id="emptyMessage">
+        No contacts found.
+    </p>
+
+    <hr>
+
+    <!-- API Response -->
+
+    <h2>API Response</h2>
+
+    <pre id="apiResponse">No API response yet.</pre>
 
     <script>
 
@@ -369,7 +133,19 @@
 
 
         // =====================================
-        // LOAD CONTACTS
+        // SHOW API RESPONSE
+        // =====================================
+
+        function showApiResponse(data) {
+
+            document.getElementById("apiResponse").textContent =
+                JSON.stringify(data, null, 4);
+
+        }
+
+
+        // =====================================
+        // LOAD CONTACTS - GET /contacts
         // =====================================
 
         async function loadContacts() {
@@ -382,16 +158,24 @@
                 const data =
                     await response.json();
 
+                // Show API response
+                showApiResponse(data);
+
                 contacts =
                     data.contacts || [];
 
                 displayContacts(contacts);
 
-            } catch (error) {
+            }
+
+            catch (error) {
+
+                showApiResponse({
+                    error: error.message
+                });
 
                 showMessage(
-                    "Unable to load contacts.",
-                    "error"
+                    "Unable to load contacts."
                 );
 
             }
@@ -411,9 +195,7 @@
             const empty =
                 document.getElementById("emptyMessage");
 
-
             table.innerHTML = "";
-
 
             if (list.length === 0) {
 
@@ -423,15 +205,12 @@
 
             }
 
-
             empty.style.display = "none";
-
 
             list.forEach(contact => {
 
                 const row =
                     document.createElement("tr");
-
 
                 row.innerHTML = `
 
@@ -446,14 +225,12 @@
                     <td>
 
                         <button
-                            class="edit-btn"
                             onclick="editContact('${contact.contactId}')"
                         >
                             Edit
                         </button>
 
                         <button
-                            class="delete-btn"
                             onclick="deleteContact('${contact.contactId}')"
                         >
                             Delete
@@ -462,7 +239,6 @@
                     </td>
 
                 `;
-
 
                 table.appendChild(row);
 
@@ -483,13 +259,11 @@
 
                     event.preventDefault();
 
-
                     const contactId =
                         document
                             .getElementById("contactId")
                             .value
                             .trim();
-
 
                     const name =
                         document
@@ -497,13 +271,11 @@
                             .value
                             .trim();
 
-
                     const phone =
                         document
                             .getElementById("phone")
                             .value
                             .trim();
-
 
                     const email =
                         document
@@ -517,9 +289,13 @@
                     if (!/^[0-9]{10}$/.test(phone)) {
 
                         showMessage(
-                            "Phone number must contain exactly 10 digits.",
-                            "error"
+                            "Phone number must contain exactly 10 digits."
                         );
+
+                        showApiResponse({
+                            message:
+                                "Phone number must contain exactly 10 digits."
+                        });
 
                         return;
 
@@ -590,6 +366,11 @@
                             await response.json();
 
 
+                        // Show actual API response
+
+                        showApiResponse(data);
+
+
                         if (!response.ok) {
 
                             throw new Error(
@@ -603,8 +384,7 @@
                         showMessage(
                             editingId
                                 ? "Contact updated successfully."
-                                : "Contact added successfully.",
-                            "success"
+                                : "Contact added successfully."
                         );
 
 
@@ -612,12 +392,17 @@
 
                         await loadContacts();
 
-                    } catch (error) {
+                    }
+
+                    catch (error) {
 
                         showMessage(
-                            error.message,
-                            "error"
+                            error.message
                         );
+
+                        showApiResponse({
+                            error: error.message
+                        });
 
                     }
 
@@ -626,7 +411,7 @@
 
 
         // =====================================
-        // EDIT
+        // EDIT CONTACT
         // =====================================
 
         function editContact(contactId) {
@@ -648,18 +433,15 @@
                 .value =
                     contact.contactId;
 
-
             document
                 .getElementById("name")
                 .value =
                     contact.name;
 
-
             document
                 .getElementById("phone")
                 .value =
                     contact.phone;
-
 
             document
                 .getElementById("email")
@@ -692,7 +474,7 @@
 
 
         // =====================================
-        // DELETE
+        // DELETE CONTACT
         // =====================================
 
         async function deleteContact(contactId) {
@@ -723,6 +505,11 @@
                     await response.json();
 
 
+                // Show actual API response
+
+                showApiResponse(data);
+
+
                 if (!response.ok) {
 
                     throw new Error(
@@ -734,20 +521,23 @@
 
 
                 showMessage(
-                    "Contact deleted successfully.",
-                    "success"
+                    "Contact deleted successfully."
                 );
 
 
-                loadContacts();
+                await loadContacts();
 
+            }
 
-            } catch (error) {
+            catch (error) {
 
                 showMessage(
-                    error.message,
-                    "error"
+                    error.message
                 );
+
+                showApiResponse({
+                    error: error.message
+                });
 
             }
 
@@ -837,35 +627,18 @@
         // MESSAGE
         // =====================================
 
-        function showMessage(message, type) {
+        function showMessage(message) {
 
-            const box =
-                document.getElementById("message");
-
-
-            box.textContent =
-                message;
-
-
-            box.className =
-                "message " + type;
-
-
-            setTimeout(() => {
-
-                box.className =
-                    "message";
-
-                box.style.display =
-                    "none";
-
-            }, 4000);
+            document
+                .getElementById("message")
+                .textContent =
+                    message;
 
         }
 
 
         // =====================================
-        // START
+        // START APPLICATION
         // =====================================
 
         loadContacts();
